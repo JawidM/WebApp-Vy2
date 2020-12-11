@@ -1,0 +1,50 @@
+﻿@model VyModels.Price
+
+@{
+    ViewBag.Title = "Price Details";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+
+<div>
+    <h2 class="mb-5 mt-2">Price Details</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RouteID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RouteID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RouteName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RouteName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PassengerType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PassengerType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketPrice)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-secondary" })
+
+</p>

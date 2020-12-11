@@ -1,0 +1,364 @@
+﻿@model VyModels.Ticket
+
+@using (Html.BeginForm(null, null, new { @id = string.Empty }, FormMethod.Post,
+    new { @id = "find-ticket-form" }))
+{
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-lg-10 mx-auto">
+                <div class="card  border-0 shadow mt-5 mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome to Vy. Where would you like to travel?</h5>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded shadow">
+
+                    <div class="row justify-content-around">
+                        <div class="col-md-5">
+
+                            @*Departure textbox*@
+                            <div class="form-group">
+                                <label class="col-form-label info">Departure</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <button id="button-addon8" class="btn btn-primary" style="color:black;background-color:transparent;border:0.5px solid" disabled><i class="fa fa-search"></i></button>
+                                    </div>
+                                    @Html.EditorFor(model => model.StartStation, new { htmlAttributes = new { @class = "form-control", id = "station1", type = "search", autocomplete = "off", placeholder = "Where do you travel from?" } })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.StartStation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            @*Destination textbox*@
+                            <div class="form-group">
+                                <label class="col-form-label">Destination</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <button id="button-addon8" class="btn btn-primary" style="color:black;background-color:transparent;border:0.5px solid" disabled><i class="fa fa-search"></i></button>
+                                    </div>
+                                    @Html.EditorFor(model => model.EndStation, new { htmlAttributes = new { @class = "form-control", id = "station2", type = "search", autocomplete = "off", placeholder = "Where do you want to go?" } })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.EndStation, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-around">
+                        <div class="col-md-5">
+                            @*Date picker*@
+
+                            <div class="form-group">
+                                <label class="col-form-label">Date</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <button id="button-addon7" class="btn btn-primary" style="color:black;background-color:transparent;border:0.5px solid" disabled><i class="fa fa-calendar"></i></button>
+                                    </div>
+                                    @Html.EditorFor(model => model.TicketPurchaseDate, new { htmlAttributes = new { @class = "datepicker form-control", autocomplete = "off" } })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.TicketPurchaseDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-5">
+                            @*Time picker*@
+
+                            <label class="col-form-label">Time</label>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <button id="button-addon7" type="submit" class="btn btn-primary" style="color:black;background-color:transparent;border:0.5px solid" disabled><i class="fa fa-clock-o"></i></button>
+                                </div>
+                                <input id="time" type="search" placeholder="Time" aria-describedby="" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-start">
+                        <div class="col-3">
+                            <label class="col-form-label" style="margin-left: 35px">Passengers</label>
+                        </div>
+                    </div>
+
+                    @*Adult selector*@
+
+                    <div class="container-fluid">
+
+                        <div class="form-row">
+
+                            <div class="input-group align-items-center">
+
+                                <span class="input-group-btn"><button type="button" class="btn-circle btn-circle-sm m-1 btn-info value-control font-weight-bolder border-0" data-action="minus" data-min="0" data-target="adult-select"><span class=""></span>-</button></span>
+                                <input type="text" maxlength="1" minlength="1" value="0" class="form-control text-center" id="adult-select" style="max-width: 50px; max-height: 50px;" onkeypress="return isNumber(event)" />
+                                <span class="input-group-btn"><button type="button" class="btn-circle btn-circle-sm m-1 btn-info value-control font-weight-bolder border-0" data-action="plus" data-max="9" data-target="adult-select"><span class=""></span>+</button></span>
+                                <text>Adult</text>
+                            </div>
+
+                            @*Student selector*@
+
+                            <div class="input-group align-items-center">
+
+                                <span class="input-group-btn"><button type="button" class="btn-circle btn-circle-sm m-1 btn-info value-control font-weight-bolder border-0" data-action="minus" data-min="0" data-target="student-select"><span class=""></span>-</button></span>
+                                <input type="text" maxlength="1" value="0" class="form-control text-center" id="student-select" style="max-width: 50px; max-height: 50px;" onkeypress="return isNumber(event)" />
+                                <span class="input-group-btn"><button type="button" class="btn-circle btn-circle-sm m-1 btn-info value-control font-weight-bolder border-0" data-action="plus" data-max="9" data-target="student-select"><span class=""></span>+</button></span>
+                                <text>Student</text>
+                            </div>
+
+                            @*Child selector*@
+
+                            <div class="input-group align-items-center">
+
+                                <span class="input-group-btn"><button type="button" class="btn-circle btn-circle-sm m-1 btn-info value-control font-weight-bolder border-0" data-action="minus" data-min="0" data-target="child-select"><span class=""></span>-</button></span>
+                                <input type="text" maxlength="1" value="0" class="form-control text-center" id="child-select" style="max-width: 50px; max-height: 50px;" onkeypress="return isNumber(event)" />
+                                <span class="input-group-btn"><button type="button" class="btn-circle btn-circle-sm m-1 btn-info value-control font-weight-bolder border-0" data-action="plus" data-max="9" data-target="child-select"><span class=""></span>+</button></span>
+                                <text>Child</text>
+                            </div>
+
+                            <div id="passenger-error">
+                                @*   @if (IsPost)
+                                        {
+                                            <p class='text-danger mt-3'> You have to choose at least one passenger!</p>
+                                        }
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.AdultsCount, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.AdultsCount, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.AdultsCount, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.StudentsCount, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.StudentsCount, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.StudentsCount, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ChildsCount, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.ChildsCount, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ChildsCount, "", new { @class = "text-danger" })
+                                        </div>*@
+                            </div>
+
+                            <div class="input-group justify-content-end">
+
+                                <button id="find-ticket" class=" btn btn-lg btn-info text-white m-3" onclick="return false"> Find tickets </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.slim.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<script>
+    // Add the supported stations and times to autocomplete textboxes
+    $(function () {
+
+        var AllStations = []
+        $.ajax({
+            url: '/Home/StationsJson',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                AllStations = data;
+                $("#station1, #station2").autocomplete({
+                    source: AllStations,
+                    minLength: 0
+                });
+                console.log(AllStations);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+        var availableStations = [
+            "Oslo S",
+            "Nationaltheatret",
+            "Lysaker",
+            "Bergen",
+            "Myrdal"
+        ];
+
+        var availableTime = [
+            "11:00",
+            "12:00",
+            "13:00",
+            "14:00",
+            "15:00"
+        ];
+
+        $("#time").autocomplete({
+            source: availableTime,
+            minLength: 0
+        });
+
+    });
+
+    $("#time").click(function () {
+
+        $("#time").autocomplete("search", "");
+
+    });
+
+    $("#station1").click(function () {
+
+        $("#station1").autocomplete("search", "");
+
+    });
+
+    $("#station2").click(function () {
+
+        $("#station2").autocomplete("search", "");
+
+    });
+
+    // Add logic to plus & minus buttons
+    $(document).on('click', '.value-control', function () {
+
+        var action = $(this).attr('data-action')
+        var min = $(this).attr('data-min')
+        var max = $(this).attr('data-max')
+        var target = $(this).attr('data-target')
+        var value = parseFloat($('[id="' + target + '"]').val());
+
+        if (isNaN(parseFloat($('[id="' + target + '"]').val()))) {
+
+            return (parseFloat($('[id="' + target + '"]').val(0)));
+
+        } else {
+
+            if (action == "plus") {
+
+                if (value < max) {
+                    value++;
+                }
+            }
+            if (action == "minus") {
+                if (value > min) {
+                    value--;
+                }
+            }
+            $('[id="' + target + '"]').val(value)
+        }
+    });
+
+    // Prevent letters in numeric input fields
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>
+@section scripts{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+                // Setup the datepicker
+                $(function () {
+                    $(".datepicker").datepicker({
+                        showOn: "focus",
+                        dateFormat: "yy.mm.dd",
+                        changeMonth: true,
+                        changeYear: true,
+                        minDate: new Date(),
+                        maxDate: "+3m",
+
+                    });
+                });
+
+                $(document).ready(function () {
+
+                 // validate the form and submit if all fields are vaild.
+                    $("#find-ticket").click(function () {
+                        var isValid = $("#find-ticket-form").valid();
+                            if (isValid) {
+                                find_ticket();
+                                //$("#find-ticket-form").submit();
+                            }
+                          });
+
+                        // Find the availabe tickets
+                        function find_ticket() {
+                            var TicketPurchaseDate = $(".datepicker").datepicker("getDate");
+                            var StartStation = $("#station1").val().toString();
+                            var EndStation = $("#station2").val();
+                            var adultCount = $("#adult-select").val();
+                            var studentCount = $("#student-select").val();
+                            var childCount = $("#child-select").val();
+                            var ticketDuration = 0;
+                            var passengers = [];
+
+                            if (StartStation == EndStation) {
+                                $("#passenger-error").append("<p class='text-danger mt-3'> StartStation and EndStation can't be the same!</p>");
+                            }
+                            else if (adultCount == 0 && studentCount == 0 && childCount == 0) {
+                                $("#passenger-error").append("<p class='text-danger mt-3'> You have to choose at least one passenger!</p>");
+                            }
+                            else {
+
+                            if (adultCount > 0) {
+                                for (var i = 0; i < adultCount; i++) {
+                                    passengers.push({ "PassengerType": "Adult" });
+
+                                }
+                            }
+
+                            if (studentCount > 0) {
+                                for (var i = 0; i < studentCount; i++) {
+                                    passengers.push({ "PassengerType": "Student" });
+
+                                }
+                            }
+
+                            if (childCount > 0) {
+                                for (var i = 0; i < childCount; i++) {
+                                    passengers.push({ "PassengerType": "Child" });
+
+                                }
+                            }
+
+                            var ticket = {
+                                "TicketPurchaseDate": TicketPurchaseDate,
+                                "StartStation": StartStation,
+                                "EndStation": EndStation,
+                                "TicketDuration": ticketDuration,
+                                "TicketPassengers": passengers
+
+                                }
+
+                            // Post the ticket to the Route page
+                            $.ajax({
+                                url: '@Url.Action("Route","Home")',
+                                contentType: 'application/json',
+                                type: 'POST',
+                                data: JSON.stringify(ticket),
+                                success: function (data) {
+
+                                    $(location).attr('href', "/Home/Route");
+                                }
+
+                            });
+
+                            }
+                                }
+                        });
+    </script>
+}

@@ -1,0 +1,57 @@
+﻿@model VyModels.Ticket
+
+@{
+    ViewBag.Title = "Receipt";
+}
+
+<div class="card-body w-50 mx-auto rounded-0">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Thanks for your purchase!</h4>
+        <p>Here is your receipt: </p>
+    </div>
+
+    <div class="card-header align text-center">
+
+        <h5 class="card-title" style="vertical-align: central;">Receipt</h5>
+
+    </div>
+
+    <div class="card-body bg-light">
+
+        <p class="card-text">Ticket ID: @Html.DisplayTextFor(model => model.TicketID)</p>
+
+
+        <p class="card-text">Valid for:</p>
+
+       @* <p class="card-text"> <span>@Model.AdultsCount</span> Adults</p>
+        <p class="card-text"> <span>@Model.StudentsCount</span> Students</p>
+        <p class="card-text"> <span>@Model.ChildsCount</span> Childs</p>
+           *@
+
+        @foreach (var passanger in Model.TicketPassengers)
+        {
+
+            <p class="card-text"> <span>1</span> @passanger.PassengerType</p>
+
+        }
+
+        <p class="card-text">Start station: @Html.DisplayTextFor(model => model.StartStation)</p>
+
+        <p class="card-text">End station: @Html.DisplayTextFor(model => model.EndStation)</p>
+
+        <p class="card-text">Purchase time: @Html.DisplayTextFor(model => model.TicketPurchaseTime)</p>
+
+        <p class="card-text">Ticket duration: @Html.DisplayTextFor(model => model.TicketDuration) <span> minutes</span></p>
+
+        <p class="card-text">Price: @Html.DisplayTextFor(model => model.TicketPrice) <span> kr</span></p>
+
+
+
+        <div class="card-footer text-muted align text-center bg-transparent">
+
+            @Html.ActionLink("Buy new ticket", "Index", "Home", new { }, new { @class = "btn btn-info m-3" })
+
+
+        </div>
+    </div>
+</div>

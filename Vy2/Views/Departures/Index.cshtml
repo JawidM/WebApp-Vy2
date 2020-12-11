@@ -1,0 +1,60 @@
+﻿@model IEnumerable<VyModels.Departure>
+
+@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Departures</title>
+</head>
+<body>
+    <h2 class="mb-5 mt-2">Departures</h2>
+
+    <p>
+        @Html.ActionLink("Back", "Details", "Routes", new { RouteID = ViewBag.RouteID }, new { @class = "btn btn-secondary" })
+        @Html.ActionLink("Add Departure", "Add", null, new { @class = "btn btn-info" })
+
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RouteID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureTime)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RouteID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartureTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { RouteID = item.RouteID, DepartureID = item.DepartureID }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Details", "Details", new { RouteID = item.RouteID, DepartureID = item.DepartureID }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Delete", "Delete", new { RouteID = item.RouteID, DepartureID = item.DepartureID }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+
+
+    </table>
+
+</body>
+</html>

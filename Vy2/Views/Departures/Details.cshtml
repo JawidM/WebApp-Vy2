@@ -1,0 +1,49 @@
+﻿@model VyModels.Departure
+
+@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Departure Details</title>
+</head>
+<body>
+    <div>
+        <h2 class="mb-5 mt-2">Departures Details</h2>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.RouteID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.RouteID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StationName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StationName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DepartureTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DepartureTime)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Back", "Index", new { RouteID = ViewBag.RouteID },new {@class="btn btn-secondary" })
+    </p>
+</body>
+</html>

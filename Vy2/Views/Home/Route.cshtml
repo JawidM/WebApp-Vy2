@@ -1,0 +1,153 @@
+﻿@model VyModels.Ticket
+
+@{
+
+    ViewBag.Title = "oneRoute";
+    Layout = "~/Views/shared/_Layout.cshtml";
+
+    var Ticket = Model;
+    var TicketRoute = Model.TicketRoute;
+    string collapseID = "";
+    string buyButtonID = "";
+}
+@using (Html.BeginForm())
+{
+    <div class="card  border-0 shadow w-100 m-3 mt-5 mb-5">
+        <div class="card-body">
+            <h5 class="card-title">When would you like to travel?</h5>
+        </div>
+    </div>
+    if (TicketRoute != null)
+    {
+        foreach (var OneDeparture in TicketRoute.RouteDepartures)
+        {
+            if (OneDeparture.StationName == Ticket.StartStation)
+            {
+
+                collapseID = "collapse" + OneDeparture.DepartureID;
+                buyButtonID = OneDeparture.DepartureID.ToString();
+
+                <div class="accordion" id="accordionExample">
+
+                    <div class="card border border-info w-100 m-3">
+                        <div class="row no-gutters">
+                            <div class="col-md-4 ml-3" style="max-width:200px;">
+                                <img src="~/Content/icon.png" class="card-img" alt="Train icon">
+                            </div>
+                            <div class="col-md-8 ml-md-5 mt-3">
+                                <h5 class="card-title">@Ticket.StartStation - @Ticket.EndStation</h5>
+                                <p id="train-time@{@OneDeparture.DepartureID}" class="card-text"> Arrival time: @OneDeparture.DepartureTime</p>
+                                <p class="card-text"> Total price: @Model.TicketPrice kr </p>
+
+                                <p class="card-text"><small class="text-muted">Train @OneDeparture.DepartureID</small></p>
+                                <a id="@{@buyButtonID}" href="#" class="btn btn-info float-right buy-ticket" onclick="return false">Buy ticket</a>
+                                <h2 class="mb-3">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@{@collapseID}" aria-expanded="false" aria-controls="#@{@collapseID}">
+                                        More details
+                                    </button>
+                                </h2>
+                                @{Model.TicketPurchaseTime = OneDeparture.DepartureTime;}
+
+                                <div hidden="hidden">
+                                </div>
+
+                                <p>TicketPurchaseTime: @Model.TicketPurchaseTime</p>
+                            </div>
+                        </div>
+
+                        <div id="@{@collapseID}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+
+                                <div class=" d-flex flex-column">
+
+                                    @{ int counter = 0;}
+                                    @for (int i = 0; i < Model.TicketRoute.RouteStations.Count; i++)
+                                    {
+
+                                        counter++;
+                                        <div class="d-flex mb-1">
+                                            <div class="d-flex flex-column pr-4 align-items-center">
+                                                <div class="rounded-circle py-2 px-3 bg-info text-white mb-1">@counter</div>
+                                                <div class="line h-100">|</div>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-dark">@Model.TicketRoute.RouteStations[i].StationName</h5>
+                                            </div>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+        }
+
+
+    }
+
+}
+
+@if(TicketRoute == null)
+{ 
+    <p class="alert alert-info border-0 text-center w-100 m-3 mt-5 mb-5">No trians founded!</p>
+
+    }
+
+@Html.ActionLink("Cancel", "Index", "Home", new { }, new { @class = "btn btn-info" })
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    // Make the ticket object from homepage availabe to Route page
+    $(document).ready(function () {
+        var ticket = {}
+            $.ajax({
+                url: '/Home/RouteJSON',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+
+                    ticket = data;
+                    Console.log(ticket);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+
+        var buttonID;
+
+        // Update ticket object and save it to database
+        $(".buy-ticket").click(function () {
+            buttonID = $(this).attr("id");
+            console.log('#' + buttonID)
+            time = $("#train-time" + buttonID).html();
+            time = time.split("Arrival time: ");
+            time = time[1]
+            console.log(time);
+
+            ticket.TicketPurchaseDate = time;
+            ticket.TicketPurchaseTime = time;
+
+            // Post ticket object to ticket getReceipt function to save it to database
+                $.ajax({
+                    url: '@Url.Action("Receipt")',
+                    contentType: 'application/json',
+                    type: 'POST',
+                    data: JSON.stringify(ticket),
+                    success: function (data) {
+
+                                window.location = data.newurl + "/" + data.id;
+
+                    }
+
+                });
+        });
+
+    });
+</script>

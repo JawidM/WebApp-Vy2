@@ -1,0 +1,70 @@
+﻿@model IEnumerable<VyModels.Station>
+
+@if (!ViewBag.LoggedIn)
+{
+    <div class="alert alert-danger">
+        <span> You are not logged in</span>
+    </div>
+    <span><a class="btn btn-info" href="Login/Index"> Login</a></span>
+
+}
+else
+{
+
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Stations</title>
+    </head>
+    <body>
+        <h2 class="mb-5 mt-2">Stations</h2>
+
+        <p>
+            @Html.ActionLink("Add New Station", "Add", null, new { @class = "btn btn-info" })
+        </p>
+        @if (ViewBag.NewStationAdded == true)
+        {
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Station Added successfully!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                You should add the station to one route before users can choose it form the station list.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StationName)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StationName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { StationID = item.StationID }, new { @class = "btn btn-outline-info" })
+                        @Html.ActionLink("Details", "Details", new { StationID = item.StationID }, new { @class = "btn btn-outline-info" })
+                        @Html.ActionLink("Delete", "Delete", new { StationID = item.StationID }, new { @class = "btn btn-outline-danger" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </body>
+</html>
+
+}

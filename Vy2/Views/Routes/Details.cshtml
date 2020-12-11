@@ -1,0 +1,69 @@
+﻿@model VyModels.Route
+
+@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Route Details</title>
+</head>
+<body>
+    <h2 class="mb-5 mt-2">Route Details</h2>
+
+
+    <p>
+        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-secondary" })
+        @Html.ActionLink("Add Station", "AddStation", new { RouteID = Model.RouteID }, new { @class = "btn btn-info" })
+        @Html.ActionLink("Departures", "Index", "Departures", new { RouteID = Model.RouteID }, new { @class = "btn btn-info" })
+    </p>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.RouteName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.RouteName)
+            </dd>
+
+        </dl>
+    </div>
+
+    <p>Route Stations:</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RouteStations.First().StationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RouteStations.First().StationNumber)
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model.RouteStations)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StationNumber)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditStation", new { RouteID = Model.RouteID, StationNumber = item.StationNumber }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Delete", "DeleteStation", new { RouteID = Model.RouteID, StationNumber = item.StationNumber }, new { @class = "btn btn-outline-danger" })
+
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

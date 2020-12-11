@@ -1,0 +1,53 @@
+﻿@model IEnumerable<VyModels.Price>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<h2 class="mb-5 mt-2">Prices</h2>
+
+<p>
+    @Html.ActionLink("Add New Price", "Add", null, new { @class = "btn btn-info" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RouteID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RouteName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PassengerType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TicketPrice)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RouteID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RouteName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PassengerType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketPrice)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { PriceID = item.PriceID }, new { @class = "btn btn-outline-info" })
+                @Html.ActionLink("Details", "Details", new { PriceID = item.PriceID }, new { @class = "btn btn-outline-info" })
+                @Html.ActionLink("Delete", "Delete", new { PriceID = item.PriceID }, new { @class = "btn btn-outline-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

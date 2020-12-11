@@ -1,0 +1,44 @@
+﻿@model IEnumerable<VyModels.Route>
+
+@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Routes</title>
+</head>
+<body>
+    <h2 class="mb-5 mt-2">Routes</h2>
+
+    <p>
+        @Html.ActionLink("Add New Route", "Add", null, new { @class = "btn btn-info" })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RouteName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RouteName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { RouteID = item.RouteID }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Details", "Details", new { RouteID = item.RouteID }, new { @class = "btn btn-outline-info" })
+                    @Html.ActionLink("Delete", "Delete", new { RouteID = item.RouteID }, new { @class = "btn btn-outline-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

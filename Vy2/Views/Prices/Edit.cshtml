@@ -1,0 +1,77 @@
+﻿@model VyModels.Price
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<h2 class="mb-5 mt-2">Edit Price</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    if (IsPost)
+    {
+
+        <div class="alert alert-danger"> There is already price for the chosen route and passenger type.</div>
+    }
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.PriceID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RouteID, htmlAttributes: new { @class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.RouteID, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            @Html.HiddenFor(model => model.RouteID, new { htmlAttributes = new { @class = "form-control"}})
+
+            @Html.ValidationMessageFor(model => model.RouteID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RouteName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.RouteName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            @Html.HiddenFor(model => model.RouteName, new { htmlAttributes = new { @class = "form-control" } })
+
+            @Html.ValidationMessageFor(model => model.RouteName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PassengerType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PassengerType, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            @Html.HiddenFor(model => model.PassengerType, new { htmlAttributes = new { @class = "form-control" } })
+
+            @Html.ValidationMessageFor(model => model.PassengerType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TicketPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TicketPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TicketPrice, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
+            <input type="submit" value="Save" class="btn btn-info" />
+        </div>
+    </div>
+</div>
+}
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
